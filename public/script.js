@@ -900,7 +900,7 @@ window.criarAluno = async () => {
 
     if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<span>Criando aluno...</span>'; 
+        btn.innerHTML = '<span>Criando aluno...</span>';
     }
 
     try {
