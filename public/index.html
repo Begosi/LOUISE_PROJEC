@@ -70,9 +70,7 @@
             <p id="l-error" class="error-msg">Acesso negado.</p>
 
             <!-- Botão discreto para testes de desenvolvimento -->
-            <div class="dev-bypass-container">
-                <button class="dev-bypass-btn" onclick="executarBypassDev()">Acesso Rápido de Testes</button>
-            </div>
+
 
             <!-- Rodapé LGPD para Transparência e Conformidade Legal -->
             <div class="lgpd-footer">
@@ -122,12 +120,33 @@
                         onclick="irParaAba('tab-lancar-notas')">
                         <i>✍️</i> <span>Lançar Notas</span>
                     </div>
-                    <div class="nav-item" data-role="prof" id="nav-docs-alunos"
-                        onclick="irParaAba('tab-documentos-alunos')">
-                        <i>📂</i> <span>Documentos dos Alunos</span>
-                    </div>
-
-                    <!-- Itens Compartilhados -->
+                    <div class="nav-item" data-role="prof" id="nav-docs-alunos" onclick="irParaAba('tab-documentos-alunos')">
+                <i>📂</i> <span>Documentos dos Alunos</span>
+            </div>
+            </nav>
+        </div>
+        <!-- Professor: criação de novos alunos -->
+        <section id="criar-aluno-section" class="modal-config-overlay" style="display:none;">
+            <div class="login-box config-wizard-box">
+                <h3>Criar Novo Aluno</h3>
+                <div class="input-group">
+                    <label for="c-aluno-nome">Nome</label>
+                    <input type="text" id="c-aluno-nome" class="login-input" placeholder="Nome do aluno">
+                </div>
+                <div class="input-group">
+                    <label for="c-aluno-login">Login</label>
+                    <input type="text" id="c-aluno-login" class="login-input" placeholder="login@email">
+                </div>
+                <div class="input-group">
+                    <label for="c-aluno-senha">Senha</label>
+                    <input type="password" id="c-aluno-senha" class="login-input" placeholder="senha">
+                </div>
+                <button class="login-btn" id="btn-criar-aluno" onclick="criarAluno()">Criar Aluno</button>
+                <p style="font-size:0.75rem;color:var(--text-muted);margin-top:15px;">
+                    O aluno será inserido no banco Supabase com tipo "aluno".
+                </p>
+            </div>
+        </section>             <!-- Itens Compartilhados -->
                     <div class="nav-item" id="nav-alterar-senha" onclick="irParaAba('tab-alterar-senha')">
                         <i>🔑</i> <span>Alterar Senha</span>
                     </div>
@@ -250,9 +269,11 @@
                             style="background: rgba(201, 149, 42, 0.05); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
                             <h4 style="color: var(--gold); margin-bottom: 8px;">⚙️ Ações Rápidas</h4>
                             <p style="font-size: 0.9rem; color: #E2DFD8; margin-bottom: 15px;">Gerencie o progresso
-                                escolar de seus alunos e envie materiais de estudo em poucos cliques.</p>
-                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                <button class="btn btn-primary" onclick="irParaAba('tab-lancar-notas')">Lançar Nova Nota
+                               // Mostrar/ocultar seção de criação de aluno para professores
+        const criarAlunoSection = document.getElementById('criar-aluno-section');
+        if (criarAlunoSection) {
+            criarAlunoSection.style.display = usuarioLogado.tipo === 'prof' ? 'block' : 'none';
+        }                        <button class="btn btn-primary" onclick="irParaAba('tab-lancar-notas')">Lançar Nova Nota
                                     ✍️</button>
                                 <button class="btn btn-secondary" onclick="irParaAba('tab-documentos-alunos')">Anexar
                                     Documento do Aluno 📂</button>

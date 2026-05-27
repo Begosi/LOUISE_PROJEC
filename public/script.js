@@ -924,44 +924,4 @@ window.criarAluno = async () => {
             btn.innerHTML = '<span>Criar Aluno</span>';
         }
     }
-}; {
-    if (!supabaseClient) {
-        showToast("Configure o Supabase para ativar o bypass.", "error");
-        return;
-    }
-
-    console.log("Acionando bypass de desenvolvimento acadêmico...");
-    try {
-        // Tenta obter um usuário real diretamente do banco para testes dinâmicos
-        const { data: usuarios, error } = await supabaseClient
-            .from('usuarios')
-            .select('*')
-            .eq('tipo', perfilSelecionado)
-            .limit(1);
-
-        if (!error && usuarios && usuarios.length > 0) {
-            usuarioLogado = usuarios[0];
-            showToast(`Logado via bypass como: ${usuarioLogado.nome}`, "success");
-            abrirPlataforma();
-        } else {
-            // Cria um usuário mock realista se o banco estiver vazio
-            usuarioLogado = {
-                id: "00000000-0000-0000-0000-000000000000",
-                nome: perfilSelecionado === 'aluno' ? "Aluno de Testes" : "Instrutor de Testes",
-                tipo: perfilSelecionado,
-                login: "dev.bypass",
-                senha: "123"
-            };
-            showToast("Banco vazio ou offline. Usando dados mock de testes.", "success");
-            abrirPlataforma();
-        }
-    } catch (err) {
-        console.error("Falha no bypass automático:", err);
-        usuarioLogado = {
-            id: "00000000-0000-0000-0000-000000000000",
-            nome: "Desenvolvedor Offline",
-            tipo: perfilSelecionado
-        };
-        abrirPlataforma();
-    }
 };
