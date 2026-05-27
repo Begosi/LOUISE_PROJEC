@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Primeiro Passo — Supabase</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- NOTIFICAÇÃO TOAST PARA FEEDBACK RÁPIDO -->
@@ -20,8 +24,9 @@
     <div id="modal-config" class="modal-config-overlay" style="display: none;">
         <div class="login-box config-wizard-box">
             <div class="login-logo">Conectar <span>Supabase</span></div>
-            <p class="login-subtitle" style="margin-bottom: 20px;">Nenhum arquivo local 'config.js' foi detectado. Para testar ou rodar online com segurança, insira os dados do seu próprio projeto Supabase:</p>
-            
+            <p class="login-subtitle" style="margin-bottom: 20px;">Nenhum arquivo local 'config.js' foi detectado. Para
+                testar ou rodar online com segurança, insira os dados do seu próprio projeto Supabase:</p>
+
             <div class="input-group">
                 <label for="c-url">Supabase Project URL</label>
                 <input type="url" id="c-url" class="login-input" placeholder="https://xxxx.supabase.co">
@@ -33,7 +38,9 @@
             </div>
 
             <button class="login-btn" onclick="salvarConfigWizard()">Conectar Banco de Dados</button>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 15px; line-height: 1.4;">Essas credenciais serão salvas com segurança apenas no armazenamento local do seu navegador (localStorage) e não serão expostas ao GitHub.</p>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 15px; line-height: 1.4;">Essas
+                credenciais serão salvas com segurança apenas no armazenamento local do seu navegador (localStorage) e
+                não serão expostas ao GitHub.</p>
         </div>
     </div>
 
@@ -42,7 +49,7 @@
         <div class="login-box">
             <div class="login-logo">Primeiro <span>Passo</span></div>
             <p class="login-subtitle">Entre na sua conta para acessar o portal acadêmico</p>
-            
+
             <div class="profile-selector">
                 <button class="profile-btn active" id="btn-aluno" onclick="setPerfil('aluno')">Sou Aluno</button>
                 <button class="profile-btn" id="btn-prof" onclick="setPerfil('prof')">Sou Instrutor</button>
@@ -55,7 +62,8 @@
 
             <div class="input-group">
                 <label for="l-pass">Senha</label>
-                <input type="password" id="l-pass" class="login-input" placeholder="••••••••" autocomplete="current-password">
+                <input type="password" id="l-pass" class="login-input" placeholder="••••••••"
+                    autocomplete="current-password">
             </div>
 
             <button class="login-btn" onclick="executarLogin()">Entrar na plataforma</button>
@@ -68,7 +76,9 @@
 
             <!-- Rodapé LGPD para Transparência e Conformidade Legal -->
             <div class="lgpd-footer">
-                🛡️ <strong>Segurança & LGPD:</strong> Este portal processa dados escolares estritamente para fins pedagógicos de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/18). Suas credenciais são encriptadas no tráfego e confidenciais.
+                🛡️ <strong>Segurança & LGPD:</strong> Este portal processa dados escolares estritamente para fins
+                pedagógicos de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/18). Suas credenciais são
+                encriptadas no tráfego e confidenciais.
             </div>
         </div>
     </section>
@@ -79,7 +89,7 @@
         <aside class="sidebar">
             <div class="sidebar-top">
                 <div class="sidebar-logo">Primeiro <span>Passo</span></div>
-                
+
                 <!-- Identificação do Usuário -->
                 <div class="sidebar-profile">
                     <div class="profile-avatar" id="profile-avatar-initial">U</div>
@@ -92,10 +102,12 @@
                 <!-- Menu de Navegação -->
                 <nav id="sidebar-nav">
                     <!-- Itens do Aluno -->
-                    <div class="nav-item" data-role="aluno" id="nav-dash-aluno" onclick="irParaAba('tab-dashboard-aluno')">
+                    <div class="nav-item" data-role="aluno" id="nav-dash-aluno"
+                        onclick="irParaAba('tab-dashboard-aluno')">
                         <i>📊</i> <span>Início</span>
                     </div>
-                    <div class="nav-item" data-role="aluno" id="nav-notas-aluno" onclick="irParaAba('tab-minhas-notas')">
+                    <div class="nav-item" data-role="aluno" id="nav-notas-aluno"
+                        onclick="irParaAba('tab-minhas-notas')">
                         <i>📝</i> <span>Minhas Notas</span>
                     </div>
                     <div class="nav-item" data-role="aluno" id="nav-modulos-aluno" onclick="irParaAba('tab-modulos')">
@@ -106,10 +118,12 @@
                     <div class="nav-item" data-role="prof" id="nav-dash-prof" onclick="irParaAba('tab-dashboard-prof')">
                         <i>📊</i> <span>Início</span>
                     </div>
-                    <div class="nav-item" data-role="prof" id="nav-lancar-notas" onclick="irParaAba('tab-lancar-notas')">
+                    <div class="nav-item" data-role="prof" id="nav-lancar-notas"
+                        onclick="irParaAba('tab-lancar-notas')">
                         <i>✍️</i> <span>Lançar Notas</span>
                     </div>
-                    <div class="nav-item" data-role="prof" id="nav-docs-alunos" onclick="irParaAba('tab-documentos-alunos')">
+                    <div class="nav-item" data-role="prof" id="nav-docs-alunos"
+                        onclick="irParaAba('tab-documentos-alunos')">
                         <i>📂</i> <span>Documentos dos Alunos</span>
                     </div>
 
@@ -133,11 +147,13 @@
             <header class="content-header">
                 <div>
                     <h2>Olá, <span id="user-name">...</span> 👋</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;" id="user-welcome-sub">Bem-vindo de volta ao seu portal acadêmico.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" id="user-welcome-sub">Bem-vindo de volta ao
+                        seu portal acadêmico.</p>
                 </div>
                 <!-- Visível em Mobile para Logout Rápido -->
                 <div class="mobile-header-actions" style="display: none;">
-                    <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 12px; font-size: 0.85rem;">🚪 Sair</button>
+                    <button class="btn btn-secondary" onclick="logout()"
+                        style="padding: 8px 12px; font-size: 0.85rem;">🚪 Sair</button>
                 </div>
             </header>
 
@@ -200,14 +216,21 @@
                         <h3 class="card-title">📚 <span>Espaço Acadêmico do Aluno</span></h3>
                     </div>
                     <div class="card-body">
-                        <p style="margin-bottom: 15px;">Bem-vindo à plataforma de estudos <strong>Primeiro Passo</strong>. Aqui você tem controle total sobre suas avaliações, módulos letivos e materiais didáticos.</p>
-                        <div style="background: rgba(201, 149, 42, 0.05); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                        <p style="margin-bottom: 15px;">Bem-vindo à plataforma de estudos <strong>Primeiro
+                                Passo</strong>. Aqui você tem controle total sobre suas avaliações, módulos letivos e
+                            materiais didáticos.</p>
+                        <div
+                            style="background: rgba(201, 149, 42, 0.05); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
                             <h4 style="color: var(--gold); margin-bottom: 8px;">💡 Dica de Estudo</h4>
-                            <p style="font-size: 0.9rem; color: #E2DFD8;">Acompanhe a aba de <strong>Módulos & Materiais</strong> semanalmente para baixar os PDFs das aulas e fazer as atividades recomendadas pelos instrutores.</p>
+                            <p style="font-size: 0.9rem; color: #E2DFD8;">Acompanhe a aba de <strong>Módulos &
+                                    Materiais</strong> semanalmente para baixar os PDFs das aulas e fazer as atividades
+                                recomendadas pelos instrutores.</p>
                         </div>
                         <div class="form-submit-container" style="justify-content: flex-start; gap: 15px;">
-                            <button class="btn btn-primary" onclick="irParaAba('tab-minhas-notas')">Ver Minhas Notas 📝</button>
-                            <button class="btn btn-secondary" onclick="irParaAba('tab-modulos')">Acessar Aulas e Materiais 📖</button>
+                            <button class="btn btn-primary" onclick="irParaAba('tab-minhas-notas')">Ver Minhas Notas
+                                📝</button>
+                            <button class="btn btn-secondary" onclick="irParaAba('tab-modulos')">Acessar Aulas e
+                                Materiais 📖</button>
                         </div>
                     </div>
                 </div>
@@ -220,14 +243,19 @@
                         <h3 class="card-title">🏫 <span>Painel de Controle do Instrutor</span></h3>
                     </div>
                     <div class="card-body">
-                        <p style="margin-bottom: 15px;">Você está logado como instrutor da plataforma acadêmica. Utilize as ferramentas de lançamento de notas e acompanhamento de documentação dos alunos.</p>
-                        
-                        <div style="background: rgba(201, 149, 42, 0.05); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                        <p style="margin-bottom: 15px;">Você está logado como instrutor da plataforma acadêmica. Utilize
+                            as ferramentas de lançamento de notas e acompanhamento de documentação dos alunos.</p>
+
+                        <div
+                            style="background: rgba(201, 149, 42, 0.05); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
                             <h4 style="color: var(--gold); margin-bottom: 8px;">⚙️ Ações Rápidas</h4>
-                            <p style="font-size: 0.9rem; color: #E2DFD8; margin-bottom: 15px;">Gerencie o progresso escolar de seus alunos e envie materiais de estudo em poucos cliques.</p>
+                            <p style="font-size: 0.9rem; color: #E2DFD8; margin-bottom: 15px;">Gerencie o progresso
+                                escolar de seus alunos e envie materiais de estudo em poucos cliques.</p>
                             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                <button class="btn btn-primary" onclick="irParaAba('tab-lancar-notas')">Lançar Nova Nota ✍️</button>
-                                <button class="btn btn-secondary" onclick="irParaAba('tab-documentos-alunos')">Anexar Documento do Aluno 📂</button>
+                                <button class="btn btn-primary" onclick="irParaAba('tab-lancar-notas')">Lançar Nova Nota
+                                    ✍️</button>
+                                <button class="btn btn-secondary" onclick="irParaAba('tab-documentos-alunos')">Anexar
+                                    Documento do Aluno 📂</button>
                             </div>
                         </div>
                     </div>
@@ -267,8 +295,9 @@
                         <h3 class="card-title">📖 <span>Módulos de Aprendizagem</span></h3>
                     </div>
                     <div class="card-body">
-                        <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 0.9rem;">Clique em qualquer módulo abaixo para expandir e ter acesso às atividades e links de materiais didáticos.</p>
-                        
+                        <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 0.9rem;">Clique em qualquer
+                            módulo abaixo para expandir e ter acesso às atividades e links de materiais didáticos.</p>
+
                         <div id="lista-modulos" class="module-list">
                             <!-- Populado dinamicamente via JS -->
                             <div class="state-container state-loading">
@@ -298,15 +327,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input-atividade-nota">Atividade</label>
-                                    <input type="text" id="input-atividade-nota" class="form-control" placeholder="Ex: Prova Final, Trabalho 1" required>
+                                    <input type="text" id="input-atividade-nota" class="form-control"
+                                        placeholder="Ex: Prova Final, Trabalho 1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-valor-nota">Nota (0 a 10)</label>
-                                    <input type="number" id="input-valor-nota" class="form-control" placeholder="Ex: 8.5" min="0" max="10" step="0.1" required>
+                                    <input type="number" id="input-valor-nota" class="form-control"
+                                        placeholder="Ex: 8.5" min="0" max="10" step="0.1" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-disciplina-nota">Disciplina / Categoria (Opcional)</label>
-                                    <input type="text" id="input-disciplina-nota" class="form-control" placeholder="Ex: Matemática, Geral">
+                                    <input type="text" id="input-disciplina-nota" class="form-control"
+                                        placeholder="Ex: Matemática, Geral">
                                 </div>
                             </div>
                             <div class="form-submit-container">
@@ -350,7 +382,8 @@
                         <h3 class="card-title">📂 <span>Anexar Documento Escolar</span></h3>
                     </div>
                     <div class="card-body">
-                        <form id="form-cadastrar-documento" onsubmit="event.preventDefault(); executarCadastrarDocumento();">
+                        <form id="form-cadastrar-documento"
+                            onsubmit="event.preventDefault(); executarCadastrarDocumento();">
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label for="select-aluno-doc">Aluno Vinculado</label>
@@ -364,14 +397,17 @@
                                         <option value="" disabled selected>Selecione o tipo...</option>
                                         <option value="Contrato de Matrícula">Contrato de Matrícula</option>
                                         <option value="Histórico Acadêmico">Histórico Acadêmico</option>
-                                        <option value="Documento de Identidade">Documento de Identidade (RG/CPF)</option>
+                                        <option value="Documento de Identidade">Documento de Identidade (RG/CPF)
+                                        </option>
                                         <option value="Comprovante de Residência">Comprovante de Residência</option>
                                         <option value="Outro">Outro Documento</option>
                                     </select>
                                 </div>
                                 <div class="form-group" style="grid-column: span 2;">
-                                    <label for="input-url-doc">URL do Documento (Link PDF/Externo ou Supabase Storage)</label>
-                                    <input type="url" id="input-url-doc" class="form-control" placeholder="https://exemplo.com/documento.pdf" required>
+                                    <label for="input-url-doc">URL do Documento (Link PDF/Externo ou Supabase
+                                        Storage)</label>
+                                    <input type="url" id="input-url-doc" class="form-control"
+                                        placeholder="https://exemplo.com/documento.pdf" required>
                                 </div>
                             </div>
                             <div class="form-submit-container">
@@ -417,15 +453,18 @@
                         <form id="form-alterar-senha" onsubmit="event.preventDefault(); executarAlterarSenha();">
                             <div class="form-group" style="margin-bottom: 20px;">
                                 <label for="input-senha-atual">Senha Atual</label>
-                                <input type="password" id="input-senha-atual" class="form-control" placeholder="Sua senha atual" required autocomplete="current-password">
+                                <input type="password" id="input-senha-atual" class="form-control"
+                                    placeholder="Sua senha atual" required autocomplete="current-password">
                             </div>
                             <div class="form-group" style="margin-bottom: 20px;">
                                 <label for="input-senha-nova">Nova Senha (Mínimo de 6 caracteres)</label>
-                                <input type="password" id="input-senha-nova" class="form-control" placeholder="Nova senha segura" required autocomplete="new-password">
+                                <input type="password" id="input-senha-nova" class="form-control"
+                                    placeholder="Nova senha segura" required autocomplete="new-password">
                             </div>
                             <div class="form-group" style="margin-bottom: 25px;">
                                 <label for="input-senha-confirmar">Confirmar Nova Senha</label>
-                                <input type="password" id="input-senha-confirmar" class="form-control" placeholder="Confirme a nova senha" required autocomplete="new-password">
+                                <input type="password" id="input-senha-confirmar" class="form-control"
+                                    placeholder="Confirme a nova senha" required autocomplete="new-password">
                             </div>
                             <button type="submit" class="btn btn-primary" id="btn-alterar-senha-submit">
                                 <span>Salvar Nova Senha</span>
@@ -443,4 +482,5 @@
     <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
