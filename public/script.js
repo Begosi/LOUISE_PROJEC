@@ -5,9 +5,9 @@ let SUPABASE_KEY = '';
 // Verifica se existe o config.js carregado com dados reais
 if (window.SUPABASE_CONFIG &&
     window.SUPABASE_CONFIG.URL &&
-    window.SUPABASE_CONFIG.URL !== 'https://zcsfogmsxxpsoutppvxn.supabase.co' &&
+    window.SUPABASE_CONFIG.URL !== 'SUA_URL_DO_SUPABASE_AQUI' &&
     window.SUPABASE_CONFIG.KEY &&
-    window.SUPABASE_CONFIG.KEY !== 'REDACTED') {
+    window.SUPABASE_CONFIG.KEY !== 'SUA_CHAVE_ANON_PUBLICA_AQUI') {
 
     SUPABASE_URL = window.SUPABASE_CONFIG.URL;
     SUPABASE_KEY = window.SUPABASE_CONFIG.KEY;
