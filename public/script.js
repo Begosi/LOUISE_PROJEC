@@ -871,7 +871,60 @@ window.logout = () => {
 };
 
 // --- ATALHO DE DESENVOLVIMENTO (BYPASS PROTEGIDO) ---
-window.executarBypassDev = async () => {
+// --- FUNÇÃO DE CRIAÇÃO DE NOVOS ALUNOS (Acesso Professor) ---
+window.criarAluno = async () => {
+    // Campos de formulário (IDs devem existir na UI)
+    const nomeInput = document.getElementById('c-aluno-nome');
+    const loginInput = document.getElementById('c-aluno-login');
+    const senhaInput = document.getElementById('c-aluno-senha');
+    const btn = document.getElementById('btn-criar-aluno');
+
+    if (!nomeInput || !loginInput || !senhaInput) {
+        showToast("Campos de criação de aluno não encontrados.", "error");
+        return;
+    }
+
+    const nome = nomeInput.value.trim();
+    const login = loginInput.value.trim();
+    const senha = senhaInput.value.trim();
+
+    if (!nome || !login || !senha) {
+        showToast("Preencha todos os campos para criar o aluno.", "error");
+        return;
+    }
+
+    if (senha.length < 6) {
+        showToast("A senha deve ter ao menos 6 caracteres.", "error");
+        return;
+    }
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>Criando aluno...</span>'; 
+    }
+
+    try {
+        const { error } = await supabaseClient
+            .from('usuarios')
+            .insert([{ nome, login, senha, tipo: 'aluno' }]);
+        if (error) throw error;
+        showToast(`Aluno ${nome} criado com sucesso!`, "success");
+        // Limpar campos
+        nomeInput.value = '';
+        loginInput.value = '';
+        senhaInput.value = '';
+        // Invalida cache de alunos para recarregamento futuro
+        cacheAlunos = [];
+    } catch (err) {
+        console.error("Erro ao criar aluno:", err);
+        showToast("Falha ao criar aluno.", "error");
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<span>Criar Aluno</span>';
+        }
+    }
+}; {
     if (!supabaseClient) {
         showToast("Configure o Supabase para ativar o bypass.", "error");
         return;
