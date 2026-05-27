@@ -44,6 +44,34 @@
         </div>
     </div>
 
+    <!-- MODAL DE CRIAÇÃO DE ALUNO (Exclusivo do Professor) -->
+    <div id="criar-aluno-section" class="modal-aluno-overlay">
+        <div class="login-box config-wizard-box" style="border-style: solid;">
+            <div class="login-logo">Novo <span>Aluno</span></div>
+            <p class="login-subtitle" style="margin-bottom: 20px;">Cadastre uma nova credencial de acesso para estudante no portal:</p>
+
+            <div class="input-group">
+                <label for="c-aluno-nome">Nome Completo</label>
+                <input type="text" id="c-aluno-nome" class="login-input" placeholder="Ex: Lucas Silva" required>
+            </div>
+
+            <div class="input-group">
+                <label for="c-aluno-login">Nome de Usuário (Login)</label>
+                <input type="text" id="c-aluno-login" class="login-input" placeholder="Ex: lucas.silva" required autocomplete="username">
+            </div>
+
+            <div class="input-group">
+                <label for="c-aluno-senha">Senha de Acesso (Mín. 6 chars)</label>
+                <input type="password" id="c-aluno-senha" class="login-input" placeholder="••••••••" required autocomplete="new-password">
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button class="login-btn" id="btn-criar-aluno" style="flex: 2;" onclick="criarAluno()">Cadastrar Aluno</button>
+                <button class="login-btn btn-secondary" style="flex: 1; background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1);" onclick="document.getElementById('criar-aluno-section').style.display='none'">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- TELA DE LOGIN -->
     <section id="tela-login">
         <div class="login-box">
@@ -124,43 +152,25 @@
                         onclick="irParaAba('tab-documentos-alunos')">
                         <i>📂</i> <span>Documentos dos Alunos</span>
                     </div>
+                    <div class="nav-item" data-role="prof" id="nav-criar-aluno"
+                        onclick="document.getElementById('criar-aluno-section').style.display='flex'">
+                        <i>➕</i> <span>Criar Novo Aluno</span>
+                    </div>
+
+                    <!-- Itens Compartilhados -->
+                    <div class="nav-item" id="nav-alterar-senha" onclick="irParaAba('tab-alterar-senha')">
+                        <i>🔑</i> <span>Alterar Senha</span>
+                    </div>
                 </nav>
             </div>
-            <!-- Professor: criação de novos alunos -->
-            <section id="criar-aluno-section" class="modal-config-overlay" style="display:none;">
-                <div class="login-box config-wizard-box">
-                    <h3>Criar Novo Aluno</h3>
-                    <div class="input-group">
-                        <label for="c-aluno-nome">Nome</label>
-                        <input type="text" id="c-aluno-nome" class="login-input" placeholder="Nome do aluno">
-                    </div>
-                    <div class="input-group">
-                        <label for="c-aluno-login">Login</label>
-                        <input type="text" id="c-aluno-login" class="login-input" placeholder="login@email">
-                    </div>
-                    <div class="input-group">
-                        <label for="c-aluno-senha">Senha</label>
-                        <input type="password" id="c-aluno-senha" class="login-input" placeholder="senha">
-                    </div>
-                    <button class="login-btn" id="btn-criar-aluno" onclick="criarAluno()">Criar Aluno</button>
-                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:15px;">
-                        O aluno será inserido no banco Supabase com tipo "aluno".
-                    </p>
-                </div>
-            </section> <!-- Itens Compartilhados -->
-            <div class="nav-item" id="nav-alterar-senha" onclick="irParaAba('tab-alterar-senha')">
-                <i>🔑</i> <span>Alterar Senha</span>
-            </div>
-            </nav>
-    </div>
 
-    <!-- Botão de Sair -->
-    <div class="sidebar-bottom">
-        <div class="logout-btn" onclick="logout()">
-            <i>🚪</i> <span>Sair da Conta</span>
-        </div>
-    </div>
-    </aside>
+            <!-- Botão de Sair -->
+            <div class="sidebar-bottom">
+                <div class="logout-btn" onclick="logout()">
+                    <i>🚪</i> <span>Sair da Conta</span>
+                </div>
+            </div>
+        </aside>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
@@ -270,17 +280,15 @@
                         style="background: rgba(201, 149, 42, 0.05); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
                         <h4 style="color: var(--gold); margin-bottom: 8px;">⚙️ Ações Rápidas</h4>
                         <p style="font-size: 0.9rem; color: #E2DFD8; margin-bottom: 15px;">Gerencie o progresso
-                            // Mostrar/ocultar seção de criação de aluno para professores
-                            const criarAlunoSection = document.getElementById('criar-aluno-section');
-                            if (criarAlunoSection) {
-                            criarAlunoSection.style.display = usuarioLogado.tipo === 'prof' ? 'block' : 'none';
-                            } <button class="btn btn-primary" onclick="irParaAba('tab-lancar-notas')">Lançar Nova Nota
+                            acadêmico dos seus alunos com as ferramentas abaixo.</p>
+                        <div class="form-submit-container" style="justify-content: flex-start; gap: 15px;">
+                            <button class="btn btn-primary" onclick="irParaAba('tab-lancar-notas')">Lançar Nova Nota
                                 ✍️</button>
                             <button class="btn btn-secondary" onclick="irParaAba('tab-documentos-alunos')">Anexar
                                 Documento do Aluno 📂</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </section>
 

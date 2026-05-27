@@ -915,6 +915,12 @@ window.criarAluno = async () => {
         senhaInput.value = '';
         // Invalida cache de alunos para recarregamento futuro
         cacheAlunos = [];
+
+        // Fecha o modal de criação de aluno
+        const modal = document.getElementById('criar-aluno-section');
+        if (modal) {
+            modal.style.display = 'none';
+        }
     } catch (err) {
         console.error("Erro ao criar aluno:", err);
         showToast("Falha ao criar aluno.", "error");

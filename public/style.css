@@ -213,8 +213,10 @@ body {
 /* PLATAFORMA (GRID LAYOUT) */
 #plataforma {
     display: none;
+    height: 100vh; /* Força altura total para evitar colapso do Grid */
     min-height: 100vh;
     grid-template-columns: 280px 1fr;
+    overflow: hidden;
 }
 
 /* SIDEBAR */
@@ -358,7 +360,7 @@ body {
     background: var(--main-bg);
     color: var(--text-white);
     overflow-y: auto;
-    max-height: 100vh;
+    height: 100vh; /* Ocupa exatamente a altura disponível */
 }
 
 /* CONTENT HEADER */
@@ -1022,4 +1024,21 @@ body.role-prof [data-role="prof"] {
     color: var(--text-muted);
     line-height: 1.5;
     text-align: justify;
+}
+
+/* Modal de Criação de Aluno */
+.modal-aluno-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 16, 14, 0.96);
+    backdrop-filter: blur(10px);
+    display: none; /* Controlado via JS */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
 }
