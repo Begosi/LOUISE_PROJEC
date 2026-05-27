@@ -11,3 +11,4 @@ public/
 # Ignorar arquivos de configuração locais (não versionar)
 config.js          # raiz – usado apenas para testes locais
 public/config.js   # gerado dinamicamente pelo build
+public/config.js
