@@ -3,19 +3,19 @@ let SUPABASE_URL = '';
 let SUPABASE_KEY = '';
 
 // Verifica se existe o config.js carregado com dados reais
-if (window.SUPABASE_CONFIG && 
-    window.SUPABASE_CONFIG.URL && 
-    window.SUPABASE_CONFIG.URL !== 'SUA_URL_DO_SUPABASE_AQUI' && 
-    window.SUPABASE_CONFIG.KEY && 
-    window.SUPABASE_CONFIG.KEY !== 'SUA_CHAVE_ANON_PUBLICA_AQUI') {
-    
+if (window.SUPABASE_CONFIG &&
+    window.SUPABASE_CONFIG.URL &&
+    window.SUPABASE_CONFIG.URL !== 'https://zcsfogmsxxpsoutppvxn.supabase.co' &&
+    window.SUPABASE_CONFIG.KEY &&
+    window.SUPABASE_CONFIG.KEY !== 'REDACTED') {
+
     SUPABASE_URL = window.SUPABASE_CONFIG.URL;
     SUPABASE_KEY = window.SUPABASE_CONFIG.KEY;
 } else {
     // Tenta carregar do localStorage (Configuração de contingência/produção online)
     const localUrl = localStorage.getItem('supabase_config_url');
     const localKey = localStorage.getItem('supabase_config_key');
-    
+
     if (localUrl && localKey) {
         SUPABASE_URL = localUrl;
         SUPABASE_KEY = localKey;
@@ -48,20 +48,20 @@ window.salvarConfigWizard = () => {
     const urlInput = document.getElementById('c-url');
     const keyInput = document.getElementById('c-key');
     if (!urlInput || !keyInput) return;
-    
+
     const url = urlInput.value.trim();
     const key = keyInput.value.trim();
-    
+
     if (!url || !key) {
         showToast("Preencha ambos os campos para conectar.", "error");
         return;
     }
-    
+
     localStorage.setItem('supabase_config_url', url);
     localStorage.setItem('supabase_config_key', key);
-    
+
     showToast("Configuração salva! Conectando...", "success");
-    
+
     setTimeout(() => {
         window.location.reload();
     }, 1000);
@@ -96,7 +96,7 @@ window.setPerfil = (tipo) => {
     perfilSelecionado = tipo;
     const btnAluno = document.getElementById('btn-aluno');
     const btnProf = document.getElementById('btn-prof');
-    
+
     if (btnAluno && btnProf) {
         btnAluno.classList.toggle('active', tipo === 'aluno');
         btnProf.classList.toggle('active', tipo === 'prof');
@@ -108,18 +108,18 @@ window.irParaAba = (abaId) => {
     // 1. Oculta todas as abas
     const abas = document.querySelectorAll('.tab-content');
     abas.forEach(aba => aba.classList.remove('active'));
-    
+
     // 2. Exibe a aba alvo
     const abaAlvo = document.getElementById(abaId);
     if (abaAlvo) {
         abaAlvo.classList.add('active');
         abaAtual = abaId;
     }
-    
+
     // 3. Atualiza os itens de menu ativos na sidebar
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => item.classList.remove('active'));
-    
+
     let navItem = null;
     if (abaId === 'tab-dashboard-aluno') navItem = document.getElementById('nav-dash-aluno');
     else if (abaId === 'tab-dashboard-prof') navItem = document.getElementById('nav-dash-prof');
@@ -128,11 +128,11 @@ window.irParaAba = (abaId) => {
     else if (abaId === 'tab-lancar-notas') navItem = document.getElementById('nav-lancar-notas');
     else if (abaId === 'tab-documentos-alunos') navItem = document.getElementById('nav-docs-alunos');
     else if (abaId === 'tab-alterar-senha') navItem = document.getElementById('nav-alterar-senha');
-    
+
     if (navItem) {
         navItem.classList.add('active');
     }
-    
+
     // 4. Carrega dinamicamente os dados daquela aba
     carregarDadosDaAba(abaId);
 };
@@ -161,7 +161,7 @@ window.executarLogin = async () => {
 
     try {
         erroMsg.style.display = 'none';
-        
+
         // Busca na tabela 'usuarios'
         const { data: usuario, error } = await supabaseClient
             .from('usuarios')
@@ -207,15 +207,15 @@ async function abrirPlataforma() {
 
     if (telaLogin) telaLogin.style.display = 'none';
     if (plataforma) plataforma.style.display = 'grid';
-    
+
     // Atualiza cabeçalhos do perfil
     if (userNameDisplay) userNameDisplay.innerText = usuarioLogado.nome;
     if (sideUserName) sideUserName.innerText = usuarioLogado.nome;
     if (avatarInitial) avatarInitial.innerText = usuarioLogado.nome.charAt(0).toUpperCase();
-    
+
     // Altera a classe do body para lidar com visibilidade condicional via CSS
     document.body.className = `role-${usuarioLogado.tipo}`;
-    
+
     if (sideUserRole) {
         sideUserRole.innerText = usuarioLogado.tipo === 'aluno' ? 'Aluno' : 'Instrutor';
     }
@@ -263,15 +263,15 @@ async function carregarDashboardAluno() {
     const statMedia = document.getElementById('stat-media-aluno');
     const statNotas = document.getElementById('stat-notas-count');
     const statProx = document.getElementById('stat-prox-modulo');
-    
+
     try {
         const { data: registros, error } = await supabaseClient
             .from('notas')
             .select('valor')
             .eq('usuario_id', usuarioLogado.id);
-        
+
         if (error) throw error;
-        
+
         if (!registros || registros.length === 0) {
             if (statMedia) statMedia.innerText = '0.0';
             if (statNotas) statNotas.innerText = '0';
@@ -281,14 +281,14 @@ async function carregarDashboardAluno() {
             if (statMedia) statMedia.innerText = media;
             if (statNotas) statNotas.innerText = registros.length;
         }
-        
+
         // Busca o primeiro módulo disponível
         const { data: modulos, errorMod } = await supabaseClient
             .from('modulos')
             .select('titulo')
             .order('ordem', { ascending: true })
             .limit(1);
-        
+
         if (!errorMod && modulos && modulos.length > 0) {
             if (statProx) statProx.innerText = modulos[0].titulo;
         } else {
@@ -304,7 +304,7 @@ async function carregarNotasDoAluno() {
     const listContainer = document.getElementById('lista-atividades');
     const badgeCount = document.getElementById('notas-count-badge');
     if (!listContainer) return;
-    
+
     listContainer.innerHTML = `
         <tr>
             <td colspan="3">
@@ -316,18 +316,18 @@ async function carregarNotasDoAluno() {
             </td>
         </tr>
     `;
-    
+
     try {
         const { data: registros, error } = await supabaseClient
             .from('notas')
             .select('*')
             .eq('usuario_id', usuarioLogado.id)
             .order('created_at', { ascending: false });
-            
+
         if (error) throw error;
-        
+
         listContainer.innerHTML = '';
-        
+
         if (!registros || registros.length === 0) {
             listContainer.innerHTML = `
                 <tr>
@@ -343,23 +343,23 @@ async function carregarNotasDoAluno() {
             if (badgeCount) badgeCount.innerText = '0 avaliações';
             return;
         }
-        
+
         if (badgeCount) badgeCount.innerText = `${registros.length} ${registros.length === 1 ? 'avaliação' : 'avaliações'}`;
-        
+
         registros.forEach(item => {
             const dataFormatada = new Date(item.created_at).toLocaleDateString('pt-BR');
             const valorNota = parseFloat(item.valor);
             let badgeClass = 'badge-info';
-            
+
             if (!isNaN(valorNota)) {
                 if (valorNota >= 7) badgeClass = 'badge-success';
                 else if (valorNota >= 5) badgeClass = 'badge-warning';
                 else badgeClass = 'badge-error';
             }
-            
+
             // Suporte direto para estilo customizado da badge vermelha (badge-error)
             const styleError = badgeClass === 'badge-error' ? 'background: rgba(255, 90, 95, 0.12); color: var(--error); border: 1px solid rgba(255, 90, 95, 0.2);' : '';
-            
+
             listContainer.innerHTML += `
                 <tr>
                     <td>
@@ -395,7 +395,7 @@ async function carregarNotasDoAluno() {
 async function carregarModulosDoAluno() {
     const container = document.getElementById('lista-modulos');
     if (!container) return;
-    
+
     container.innerHTML = `
         <div class="state-container state-loading">
             <span class="state-icon-large">⌛</span>
@@ -403,15 +403,15 @@ async function carregarModulosDoAluno() {
             <p class="state-subtitle">Buscando aulas e materiais integrados.</p>
         </div>
     `;
-    
+
     try {
         const { data: modulos, error: errorMod } = await supabaseClient
             .from('modulos')
             .select('*')
             .order('ordem', { ascending: true });
-            
+
         if (errorMod) throw errorMod;
-        
+
         if (!modulos || modulos.length === 0) {
             container.innerHTML = `
                 <div class="state-container state-empty">
@@ -422,22 +422,22 @@ async function carregarModulosDoAluno() {
             `;
             return;
         }
-        
+
         container.innerHTML = '';
-        
+
         for (const mod of modulos) {
             const { data: atividades, error: errorAtiv } = await supabaseClient
                 .from('atividades')
                 .select('*')
                 .eq('modulo_id', mod.id)
                 .order('data_disponibilizacao', { ascending: true });
-            
+
             const ativCount = atividades ? atividades.length : 0;
-            
+
             const card = document.createElement('div');
             card.className = 'module-card';
             card.id = `module-${mod.id}`;
-            
+
             card.innerHTML = `
                 <div class="module-trigger" onclick="toggleModulo('${mod.id}')">
                     <div class="module-header-info">
@@ -456,9 +456,9 @@ async function carregarModulosDoAluno() {
                     <div class="activities-list-${mod.id}"></div>
                 </div>
             `;
-            
+
             container.appendChild(card);
-            
+
             const ativListContainer = card.querySelector(`.activities-list-${mod.id}`);
             if (!atividades || atividades.length === 0) {
                 ativListContainer.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted); padding: 10px;">Nenhuma atividade ou material registrado para este módulo.</p>`;
@@ -475,12 +475,12 @@ async function carregarModulosDoAluno() {
                     } else {
                         linkMarkup = `<span style="font-size: 0.75rem; color: var(--text-muted);">Sem material digital</span>`;
                     }
-                    
+
                     ativListContainer.innerHTML += `
                         <div class="activity-item">
                             <div class="activity-left">
                                 <span class="activity-title">${ativ.titulo}</span>
-                                <span class="activity-desc">${ativ.descricao || 'Sem descrição' } • Disponibilizado em ${dateFormatted}</span>
+                                <span class="activity-desc">${ativ.descricao || 'Sem descrição'} • Disponibilizado em ${dateFormatted}</span>
                             </div>
                             <div class="activity-right">
                                 ${linkMarkup}
@@ -516,28 +516,28 @@ async function carregarDashboardProf() {
     const statAlunos = document.getElementById('stat-total-alunos');
     const statTotalNotas = document.getElementById('stat-total-notas-lancadas');
     const statTotalDocs = document.getElementById('stat-total-docs');
-    
+
     try {
         // Alunos
         const { count: countAlunos, error: errAlunos } = await supabaseClient
             .from('usuarios')
             .select('*', { count: 'exact', head: true })
             .eq('tipo', 'aluno');
-        
+
         if (!errAlunos && statAlunos) statAlunos.innerText = countAlunos || 0;
-        
+
         // Notas
         const { count: countNotas, error: errNotas } = await supabaseClient
             .from('notas')
             .select('*', { count: 'exact', head: true });
-            
+
         if (!errNotas && statTotalNotas) statTotalNotas.innerText = countNotas || 0;
-        
+
         // Documentos
         const { count: countDocs, error: errDocs } = await supabaseClient
             .from('documentos_alunos')
             .select('*', { count: 'exact', head: true });
-            
+
         if (!errDocs && statTotalDocs) {
             statTotalDocs.innerText = countDocs || 0;
         } else if (statTotalDocs) {
@@ -552,7 +552,7 @@ async function carregarDashboardProf() {
 async function carregarAlunosParaSelect(selectElementId) {
     const selectEl = document.getElementById(selectElementId);
     if (!selectEl) return;
-    
+
     if (cacheAlunos.length === 0) {
         try {
             const { data, error } = await supabaseClient
@@ -560,7 +560,7 @@ async function carregarAlunosParaSelect(selectElementId) {
                 .select('id, nome')
                 .eq('tipo', 'aluno')
                 .order('nome');
-                
+
             if (error) throw error;
             cacheAlunos = data || [];
         } catch (err) {
@@ -569,11 +569,11 @@ async function carregarAlunosParaSelect(selectElementId) {
             return;
         }
     }
-    
+
     const defaultOption = selectEl.options[0];
     selectEl.innerHTML = '';
     selectEl.appendChild(defaultOption);
-    
+
     cacheAlunos.forEach(aluno => {
         const opt = document.createElement('option');
         opt.value = aluno.id;
@@ -589,21 +589,21 @@ window.executarSalvarNota = async () => {
     const inputVal = document.getElementById('input-valor-nota');
     const inputDisc = document.getElementById('input-disciplina-nota');
     const btn = document.getElementById('btn-salvar-nota');
-    
+
     if (!selectAluno.value || !inputAtiv.value || !inputVal.value) {
         showToast("Preencha todos os campos obrigatórios.", "error");
         return;
     }
-    
+
     const valorNota = parseFloat(inputVal.value);
     if (isNaN(valorNota) || valorNota < 0 || valorNota > 10) {
         showToast("A nota acadêmica deve ser entre 0 e 10.", "error");
         return;
     }
-    
+
     btn.disabled = true;
     btn.innerHTML = '<span>Registrando Nota...</span>';
-    
+
     try {
         const notaObj = {
             usuario_id: selectAluno.value,
@@ -611,28 +611,28 @@ window.executarSalvarNota = async () => {
             valor: valorNota,
             disciplina: inputDisc.value.trim() || 'Geral'
         };
-        
+
         if (usuarioLogado && usuarioLogado.id) {
             notaObj.professor_id = usuarioLogado.id;
         }
-        
+
         const { error } = await supabaseClient
             .from('notas')
             .insert([notaObj]);
-            
+
         if (error) throw error;
-        
+
         showToast("Nota lançada com sucesso!", "success");
-        
+
         // Reseta o form
         inputAtiv.value = '';
         inputVal.value = '';
         inputDisc.value = '';
         selectAluno.value = '';
-        
+
         carregarUltimasNotasProfessor();
         carregarDashboardProf();
-        
+
     } catch (err) {
         console.error("Erro ao cadastrar nota:", err);
         showToast("Falha ao salvar nota acadêmica.", "error");
@@ -646,9 +646,9 @@ window.executarSalvarNota = async () => {
 async function carregarUltimasNotasProfessor() {
     const tbody = document.getElementById('lista-ultimas-notas-prof');
     if (!tbody) return;
-    
+
     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">Buscando notas recentes...</td></tr>';
-    
+
     try {
         const { data: notas, error } = await supabaseClient
             .from('notas')
@@ -665,20 +665,20 @@ async function carregarUltimasNotasProfessor() {
             `)
             .order('created_at', { ascending: false })
             .limit(10);
-            
+
         if (error) throw error;
-        
+
         tbody.innerHTML = '';
-        
+
         if (!notas || notas.length === 0) {
             tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: var(--text-muted);">Nenhuma nota cadastrada recentemente.</td></tr>';
             return;
         }
-        
+
         notas.forEach(item => {
             const dataF = new Date(item.created_at).toLocaleDateString('pt-BR');
             const nomeAluno = item.usuarios ? item.usuarios.nome : 'Aluno Acadêmico';
-            
+
             tbody.innerHTML += `
                 <tr>
                     <td><strong>${nomeAluno}</strong></td>
@@ -701,15 +701,15 @@ window.executarCadastrarDocumento = async () => {
     const selectTipo = document.getElementById('select-tipo-doc');
     const inputUrl = document.getElementById('input-url-doc');
     const btn = document.getElementById('btn-cadastrar-doc');
-    
+
     if (!selectAluno.value || !selectTipo.value || !inputUrl.value) {
         showToast("Preencha todos os campos obrigatórios.", "error");
         return;
     }
-    
+
     btn.disabled = true;
     btn.innerHTML = '<span>Salvando Documento...</span>';
-    
+
     try {
         const docObj = {
             aluno_id: selectAluno.value,
@@ -717,23 +717,23 @@ window.executarCadastrarDocumento = async () => {
             url: inputUrl.value.trim(),
             professor_id: usuarioLogado.id
         };
-        
+
         const { error } = await supabaseClient
             .from('documentos_alunos')
             .insert([docObj]);
-            
+
         if (error) throw error;
-        
+
         showToast("Documento acadêmico cadastrado com sucesso!", "success");
-        
+
         // Reseta form
         selectAluno.value = '';
         selectTipo.value = '';
         inputUrl.value = '';
-        
+
         carregarDocumentosDosAlunos();
         carregarDashboardProf();
-        
+
     } catch (err) {
         console.error("Erro ao registrar documento:", err);
         showToast("Tabela 'documentos_alunos' não encontrada no Supabase.", "error");
@@ -747,9 +747,9 @@ window.executarCadastrarDocumento = async () => {
 async function carregarDocumentosDosAlunos() {
     const tbody = document.getElementById('lista-documentos-alunos');
     if (!tbody) return;
-    
+
     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Buscando documentos dos alunos...</td></tr>';
-    
+
     try {
         const { data: docs, error } = await supabaseClient
             .from('documentos_alunos')
@@ -763,20 +763,20 @@ async function carregarDocumentosDosAlunos() {
                 )
             `)
             .order('created_at', { ascending: false });
-            
+
         if (error) throw error;
-        
+
         tbody.innerHTML = '';
-        
+
         if (!docs || docs.length === 0) {
             tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--text-muted);">Nenhum documento escolar anexado.</td></tr>';
             return;
         }
-        
+
         docs.forEach(item => {
             const dataF = new Date(item.created_at).toLocaleDateString('pt-BR');
             const nomeAluno = item.usuarios ? item.usuarios.nome : 'Aluno Acadêmico';
-            
+
             tbody.innerHTML += `
                 <tr>
                     <td><strong>${nomeAluno}</strong></td>
@@ -804,29 +804,29 @@ window.executarAlterarSenha = async () => {
     const inputNova = document.getElementById('input-senha-nova');
     const inputConfirmar = document.getElementById('input-senha-confirmar');
     const btnSubmit = document.getElementById('btn-alterar-senha-submit');
-    
+
     const senhaAtual = inputAtual.value.trim();
     const senhaNova = inputNova.value.trim();
     const senhaConfirmar = inputConfirmar.value.trim();
-    
+
     if (!senhaAtual || !senhaNova || !senhaConfirmar) {
         showToast("Preencha todos os campos do formulário.", "error");
         return;
     }
-    
+
     if (senhaNova.length < 6) {
         showToast("A senha nova precisa ter pelo menos 6 caracteres.", "error");
         return;
     }
-    
+
     if (senhaNova !== senhaConfirmar) {
         showToast("A confirmação da nova senha está inconsistente.", "error");
         return;
     }
-    
+
     btnSubmit.disabled = true;
     btnSubmit.innerHTML = '<span>Salvando Nova Senha...</span>';
-    
+
     try {
         // 1. Confere a senha atual direto na tabela usuarios
         const { data: usuario, error: errSelect } = await supabaseClient
@@ -835,27 +835,27 @@ window.executarAlterarSenha = async () => {
             .eq('id', usuarioLogado.id)
             .eq('senha', senhaAtual)
             .single();
-            
+
         if (errSelect || !usuario) {
             showToast("A senha atual informada está incorreta.", "error");
             return;
         }
-        
+
         // 2. Realiza o update no Supabase
         const { error: errUpdate } = await supabaseClient
             .from('usuarios')
             .update({ senha: senhaNova })
             .eq('id', usuarioLogado.id);
-            
+
         if (errUpdate) throw errUpdate;
-        
+
         showToast("Senha de acesso alterada com sucesso!", "success");
-        
+
         // Limpa formulário
         inputAtual.value = '';
         inputNova.value = '';
         inputConfirmar.value = '';
-        
+
     } catch (err) {
         console.error("Erro ao alterar senha acadêmica:", err);
         showToast("Erro ao processar alteração de senha.", "error");
@@ -885,7 +885,7 @@ window.executarBypassDev = async () => {
             .select('*')
             .eq('tipo', perfilSelecionado)
             .limit(1);
-        
+
         if (!error && usuarios && usuarios.length > 0) {
             usuarioLogado = usuarios[0];
             showToast(`Logado via bypass como: ${usuarioLogado.nome}`, "success");
